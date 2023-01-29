@@ -9,6 +9,7 @@ if($_POST){
         $ekle->execute([':d'=>$dersadi]);
         if($ekle){
             echo "<div class='alert alert-success'>Ekleme Başarılı</div>";
+            header('refresh:1;url=listele.php');
         }else{
             echo "<div class='alert alert-danger'>Ekleme Başarısız</div>";
         }
