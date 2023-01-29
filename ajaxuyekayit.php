@@ -13,37 +13,51 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <title>Ajax Veri Ekleme</title>
+    <title>Ajax Üye Kayıt</title>
   </head>
   <body>
     <div class="container">
         <script>
             function add(){
-                var veri = $("#ekle").serialize();
+                var veri = $("#kayit").serialize();
 
                 $.ajax({
                     type : "POST",
                     data : veri,
-                    url : "ajaxekle.php",
+                    url : "kayit.php",
                     success : function(data){
                         if($.trim(data) == "bos"){
                             Swal.fire({
                                 title: 'Hata!',
-                                text: 'Veri Boş Olamaz',
+                                text: 'Boş Alanları Doldurun',
                                 icon: 'error',
                                 confirmButtonText: 'Tamam'
                             })
                         }else if($.trim(data)== "ok"){
                             Swal.fire({
                                 title: 'Başarılı!',
-                                text: 'Ekle İşlemi Başarılı',
+                                text: 'Kayıt Olundu',
                                 icon: 'success',
                                 confirmButtonText: 'Tamam'
                             })
                         }else if($.trim(data)== "hata"){
                             Swal.fire({
                                 title: 'Hata!',
-                                text: 'Ekleme İşlemi Başarısız',
+                                text: 'Kayıt Olma İşlemi Başarısız',
+                                icon: 'error',
+                                confirmButtonText: 'Tamam'
+                            })
+                        }else if($.trim(data)== "var"){
+                            Swal.fire({
+                                title: 'Hata!',
+                                text: 'Kullanıcı Adı veya E-Posta Kayıtlı',
+                                icon: 'error',
+                                confirmButtonText: 'Tamam'
+                            })
+                        }else if($.trim(data)== "eposta"){
+                            Swal.fire({
+                                title: 'Hata!',
+                                text: 'Geçersiz E-Posta Adresi',
                                 icon: 'error',
                                 confirmButtonText: 'Tamam'
                             })
@@ -53,11 +67,13 @@
             }
         </script>
         <div class="col-6 mt-5">
-            <form action="" id="ekle" method="post" onsubmit="return false;" >
+            <form action="" id="kayit" method="post" onsubmit="return false;" >
 
-                <input type="text" name="veri" class="form-control mb-3">
+                <input type="text" name="kadi" class="form-control mb-3" placeholder="Kullanıcı Adı">
+                <input type="email" name="eposta" class="form-control mb-3" placeholder="Email">
+                <input type="password" name="sifre" class="form-control mb-3" placeholder="Şifre">
 
-                <button type="submit" onclick="add();" class="btn btn-primary">Ekle</button>
+                <button type="submit" onclick="add();" class="btn btn-success">Kayıt Ol</button>
             </form>
         </div>
     </div>
