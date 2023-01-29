@@ -34,6 +34,7 @@ require_once 'baglan.php';
                 <tr>
                     <td><?= $say; ?></td>
                     <td><?= $row['ders_adi']; ?></td>
+                    <td><a href="verisil.php?id=<?= $row['id']; ?>">Sil</a> | <a href="veriguncelle.php?id=<?= $row['id']; ?>">Güncelle</a></td>
                 </tr>
             <?php
             $say++;
