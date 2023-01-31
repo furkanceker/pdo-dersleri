@@ -1,6 +1,6 @@
 <?php
 require_once 'baglan.php';
-
+ob_start();
 if($_POST){
     $eposta = $_POST['eposta'];
     $sifre = $_POST['sifre'];
@@ -18,6 +18,7 @@ if($_POST){
                 $row = $giris->fetch(PDO::FETCH_OBJ);
 
                 $_SESSION['oturum'] = true;
+                $_SESSION['id'] = $row->id;
                 $_SESSION['adsoyad'] = $row->kadi;
                 $_SESSION['eposta'] = $row->eposta;
 

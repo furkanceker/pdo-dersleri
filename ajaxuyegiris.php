@@ -78,9 +78,48 @@ if(isset($_GET['cikis'])){
             <?php } else { 
                 
                 echo "<b>".$_SESSION['adsoyad']."</b> Hoşgeldin | <a href='ajaxuyegiris.php?cikis'>Çıkış Yap</a>";  
+                $dersler = $db->prepare("SELECT * FROM dersler");
+                $dersler->execute();
+                if($dersler->rowCount()){
+
+                    ?>
+                        <table class="table mt-3">
+                            <thead>
+                                <tr>
+                                    <th>DERS ID</th>
+                                    <th>DERS ADI</th>
+                                    <th>İŞLEMLER</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    <?php
+                    foreach($dersler as $row){
+                        ?>
+                            <tr>
+                                <td><?= $row['id']; ?></td>
+                                <td><?= $row['ders_adi']; ?></td>
+                                <td>
+                                    <?php
+                                        $sorgu = $db->prepare("SELECT * FROM favoriler WHERE favori_ekleyen=:e AND favori_eklenen_ders=:d");
+                                        $sorgu->execute([':e'=>$_SESSION['id'],':d'=>$row['id']]);
+                                        if($sorgu->rowCount()){
+                                            ?>                           
+                                                <a href="favoriekle.php?cikar=<?= $row['id']; ?>" class="btn btn-danger">Favorilerden Çıkar</a>
+                                            <?php
+                                        }else{
+                                            ?>
+                                                <a href="favoriekle.php?id=<?= $row['id']; ?>" class="btn btn-success">Favorilere Ekle</a> 
+                                            <?php
+                                        }
+                                    ?>
+                                </td>
+                            </tr>
+                        <?php
+                    }
+                    echo "</tbody></table>";
+                }
+            }
             ?>
-                
-            <?php } ?>
         </div>
     </div>
 
